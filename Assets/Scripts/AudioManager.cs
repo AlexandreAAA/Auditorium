@@ -2,76 +2,62 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+namespace Auditorium
 {
-
-    #region Exposed
-
-    public AudioSource[] m_hajime;
-    public GameObject m_messagWwin;
-
-    #endregion
-
-
-    #region Unity API
-
-    private void Awake()
+    public class AudioManager : MonoBehaviour
     {
-        m_hajime = FindObjectsOfType<AudioSource>();
-        _timeToWin = Time.time;
-        
-        
-        
-    }
+        #region Exposed
 
-    private void Start()
-    {
-        for(int i = 0; i < m_hajime.Length; i++)
-        { 
-            m_hajime[i].Play();
-        }
-    }
+        public AudioSource[] m_hajime;
+        public GameObject m_messagWwin;
 
-    public void YouWin()
-    {
-        //Time.timeScale = 0;
-        m_messagWwin.SetActive(true);
-        Debug.Log("GG!");
-    }
+        #endregion
 
-    private void Update()
-    {
-        foreach (AudioSource _audio in m_hajime)
+        #region Unity API
+
+        private void Awake()
         {
-            if (_audio.volume >= 0.90f)
+            m_hajime = FindObjectsOfType<AudioSource>();
+        }
+
+        private void Start()
+        {
+            for (int i = 0; i < m_hajime.Length; i++)
             {
-                _check++;
-            }
-            else
-            {
-                _check = 0;
+                m_hajime[i].Play();
             }
         }
 
-        if (_check >= m_hajime.Length)
+        public void YouWin()
         {
-            YouWin();
+            m_messagWwin.SetActive(true);
+            Debug.Log("GG!");
         }
 
+        private void Update()
+        {
+            foreach (AudioSource _audio in m_hajime)
+            {
+                if (_audio.volume >= 0.90f)
+                {
+                    _check++;
+                }
+                else
+                {
+                    _check = 0;
+                }
+            }
+
+            if (_check >= m_hajime.Length)
+            {
+                YouWin();
+            }
+        }
+        #endregion
+
+        #region Privates
+        private float _check;
+
+        #endregion
     }
-    #endregion
-
-
-    #region Main Method
-    
-    
-
-    #endregion
-
-    #region Privates
-
-    private float _timeToWin;
-    private float _check;
-
-    #endregion
 }

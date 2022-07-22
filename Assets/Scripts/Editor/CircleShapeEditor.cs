@@ -1,18 +1,19 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(CircleShape))]
-public class CircleShapeEditor : Editor
+namespace Auditorium
 {
-    private void OnEnable()
+    [CustomEditor(typeof(CircleShape))]
+    public class CircleShapeEditor : Editor
     {
-        _script = target as CircleShape;
-    }
-
-    public override void OnInspectorGUI()
-    {
-        using (var changeScope = new EditorGUI.ChangeCheckScope())
+        private void OnEnable()
         {
+            _script = target as CircleShape;
+        }
+
+        public override void OnInspectorGUI()
+        {
+            using var changeScope = new EditorGUI.ChangeCheckScope();
             DrawDefaultInspector();
 
             if (changeScope.changed)
@@ -20,7 +21,7 @@ public class CircleShapeEditor : Editor
                 _script.UpdateCircle();
             }
         }
-    }
 
-    private CircleShape _script;
+        private CircleShape _script;
+    }
 }
